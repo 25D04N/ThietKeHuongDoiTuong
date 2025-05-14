@@ -34,7 +34,7 @@ public class GiaoDienChinh extends JFrame {
 
     public GiaoDienChinh() {
         setTitle("Quản lý cửa hàng");
-        setSize(1000, 600);
+        setSize(1000, 650);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         // CardLayout cho content pane
@@ -70,6 +70,7 @@ public class GiaoDienChinh extends JFrame {
 
         pnQuanLySanPham = new JPanel();
         pnQuanLySanPham.add(new JLabel("Quản lý sản phẩm"));
+        taoQuanLiSanPham();
 
         pnQuanLyKhachHang = new JPanel();
         pnQuanLyKhachHang.add(new JLabel("Quản lý khách hàng"));
@@ -223,7 +224,129 @@ public class GiaoDienChinh extends JFrame {
         pnTaoDon.revalidate();
         pnTaoDon.repaint();
     }
+//tạo quản lí sản phẩm
+    public void taoQuanLiSanPham() {
+		//
+		JButton bSave=new JButton("Save");
+		//
+		JPanel quanLiSanPHam = new JPanel();
+		quanLiSanPHam.setLayout(new BorderLayout());
+		quanLiSanPHam.setBorder(BorderFactory.createTitledBorder("Quản lí sản phẩm"));
+		// thanh tiềm kiếm sản phẩm
+		JPanel panelSearch = new JPanel();
+		panelSearch.setLayout(new FlowLayout());
+		panelSearch.setBorder(BorderFactory.createTitledBorder("Tìm kiếm sản phẩm"));
+		JTextField boxSearch = new JTextField(20);
+		panelSearch.add(boxSearch);
+		JButton nutSerach = new JButton("Search");
+		panelSearch.add(nutSerach);
 
+		quanLiSanPHam.add(panelSearch, BorderLayout.NORTH);
+
+		// bảng thông tin các loại sản phẩm toàn kho;
+		JPanel panelBangThongTinSP = new JPanel();
+		panelBangThongTinSP.setLayout(new BorderLayout());
+		quanLiSanPHam.add(panelBangThongTinSP, BorderLayout.CENTER);
+		
+		JPanel panelBangThongTinSP1 = new JPanel();
+		panelBangThongTinSP.setLayout(new BorderLayout());
+		panelBangThongTinSP.add(panelBangThongTinSP1, BorderLayout.CENTER);
+		panelBangThongTinSP.setBorder(BorderFactory.createTitledBorder("Thông tin các loại sản phẩm"));
+		String[] thongtinCacCot = { "Mã Sản Phẩm", "Tên Sản Phẩm", "Số lượng Tồn Kho", "Giá Niêm Yết", "Hình ảnh" };
+		String[][] data = {{"0011","Coca","1000","10000","Chưa cập nhật"}};
+		//không cho chỉnh sửa cột mã 
+		DefaultTableModel ttCOT = new DefaultTableModel(data,thongtinCacCot){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column != 0;
+            }
+        };
+		JTable tableBangThongTinSP = new JTable(ttCOT);
+		JScrollPane scrollChiTiet = new JScrollPane(tableBangThongTinSP);
+		panelBangThongTinSP1.add(scrollChiTiet);
+		
+		
+		
+		
+		
+		
+		//
+		JPanel panelBangThongTinSP2 = new JPanel();
+		panelBangThongTinSP2.setLayout(new FlowLayout());
+		panelBangThongTinSP.add(panelBangThongTinSP2,BorderLayout.SOUTH);
+		panelBangThongTinSP2.add(bSave);
+		
+
+		// bảng quản lí chức năng sản phẩm
+		JPanel panelQlFunction = new JPanel();
+		panelQlFunction.setLayout(new BoxLayout(panelQlFunction, BoxLayout.Y_AXIS));
+		quanLiSanPHam.add(panelQlFunction, BorderLayout.WEST);
+		//
+		JButton add = new JButton("ADD");
+		JButton remove = new JButton("Remove");
+		JTextField textMaSP = new JTextField(10);
+		JTextField textMaSP_Xoa = new JTextField(10);
+		JTextField textTenSP = new JTextField(10);
+		JTextField textSLSP = new JTextField(10);
+		JTextField textGiaSP = new JTextField(10);
+		JTextField textAnhSP = new JTextField(10);
+		
+		//
+		JPanel pnADDRe1=new JPanel();
+		pnADDRe1.setLayout(new GridLayout(2,1));
+		pnADDRe1.setBorder(BorderFactory.createTitledBorder("Thêm Sản Phẩm"));
+		panelQlFunction.add(pnADDRe1);
+		
+		JPanel pnADDRe11=new JPanel();
+		pnADDRe11.setLayout(new GridLayout(5,2));
+		pnADDRe1.add(pnADDRe11);
+		pnADDRe11.add(new JLabel("Mã Sản Phẩm:"));
+		pnADDRe11.add(textMaSP);
+		pnADDRe11.add(new JLabel("Tên Sản Phẩm:"));
+		pnADDRe11.add(textTenSP);
+		pnADDRe11.add(new JLabel("Số Lượng:"));
+		pnADDRe11.add(textSLSP);
+		pnADDRe11.add(new JLabel("Giá Sản Phẩm:"));
+		pnADDRe11.add(textGiaSP);
+		pnADDRe11.add(new JLabel("Ảnh Sản Phẩm:"));
+		pnADDRe11.add(textAnhSP);
+
+		JPanel pnADDRe12=new JPanel();
+		pnADDRe12.setLayout(new FlowLayout());
+		pnADDRe1.add(pnADDRe12);
+		pnADDRe12.add(add);
+		//
+		JPanel pnADDRe2=new JPanel();
+		pnADDRe2.setLayout(new GridLayout(2,1));
+		pnADDRe2.setBorder(BorderFactory.createTitledBorder("Xóa Sản Phẩm"));
+		panelQlFunction.add(pnADDRe2);
+		
+		JPanel pnADDRe21=new JPanel();
+		pnADDRe21.setLayout(new GridLayout(2,1));
+		pnADDRe2.add(pnADDRe21);
+		pnADDRe21.add(new JLabel("Mã Sản Phẩm:"));
+		pnADDRe21.add(textMaSP_Xoa);
+		
+		JPanel pnADDRe22=new JPanel();
+		pnADDRe22.setLayout(new FlowLayout());
+		pnADDRe2.add(pnADDRe22);
+		pnADDRe22.add(remove);
+		//
+		pnQuanLySanPham.removeAll();
+		pnQuanLySanPham.add(quanLiSanPHam, BorderLayout.CENTER);
+		pnQuanLySanPham.revalidate();
+		pnQuanLySanPham.repaint();
+		//
+		bSave.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Dữ liệu đã được lưu","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+				
+			}
+		});
+		
+	}
     public static void main(String[] args) {
         new GiaoDienChinh();
     }
